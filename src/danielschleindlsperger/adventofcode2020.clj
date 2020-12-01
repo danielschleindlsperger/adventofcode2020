@@ -1,7 +1,10 @@
 (ns danielschleindlsperger.adventofcode2020
-  (:gen-class))
+  (:gen-class)
+  (:require [danielschleindlsperger.adventofcode2020.day-01 :as day-01]))
+
+(def days {:day-01 day-01/solve})
 
 (defn -main
   "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+  [day & args]
+  (println day args))
