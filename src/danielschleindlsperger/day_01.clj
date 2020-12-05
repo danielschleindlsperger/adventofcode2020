@@ -3,12 +3,12 @@
             [clojure.string :as str]
             [clojure.java.io :as io]))
 
-(def input (slurp (io/resource "day01.txt")))
+(def puzzle-input (slurp (io/resource "day01.txt")))
 
 (defn- parse-input [input]
   (map bigint (str/split input #"\n")))
 
-(defn part-1 [input]
+(defn solve-part-1 [input]
   (let [xs (parse-input input)
         pairs (for [x xs
                     y xs]
@@ -16,7 +16,7 @@
                   (* x y)))]
     (first (filter some? pairs))))
 
-(defn part-2 [input]
+(defn solve-part-2 [input]
   (let [xs (parse-input input)
         triples (for [x xs
                       y xs
@@ -32,9 +32,9 @@
 299
 675
 1456")
-  (is (= 514579 (part-1 example)))
-  (is (= 241861950 (part-2 example))))
+  (is (= 514579 (solve-part-1 example)))
+  (is (= 241861950 (solve-part-2 example))))
 
 (comment
-  (part-1 input)
-  (part-2 input))
+  (solve-part-1 puzzle-input)
+  (solve-part-2 puzzle-input))
