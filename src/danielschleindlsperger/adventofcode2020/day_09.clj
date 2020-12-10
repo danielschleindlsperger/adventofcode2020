@@ -29,9 +29,27 @@
                            first)]
     (nth first-invalid preamble-len)))
 
-(defn solve-part-2 [input]
-  (let [nums (parse-input input)]
-    nums))
+(defn- sub-vec-with-matching-sum [nums target-sum]
+  (reduce (fn [init x]
+            (let [sum (apply + (conj init x))]
+              (cond (= sum target-sum) (reduced (conj init x))
+                    (< target-sum sum) (reduced nil)
+                    :else (conj init x))))
+          []
+          nums))
+
+(defn- sum-first-last [xs] (+ (first xs) (last xs)))
+
+(defn solve-part-2 [input preamble-len]
+  (let [nums (parse-input input)
+        first-invalid (solve-part-1 input preamble-len)]
+    (->> (range 0 (count nums))
+         (map #(drop % nums))
+         (map #(sub-vec-with-matching-sum % first-invalid))
+         (filter some?)
+         (first)
+         (sort)
+         (sum-first-last))))
 
 (comment
   (def example "35
@@ -55,5 +73,6 @@
 309
 576")
   (solve-part-1 example 5) ;; 127 (example)
-  (solve-part-1 puzzle-input 25) ;; 2014
-  #_(solve-part-2 puzzle-input)) ;; 2976
+  (solve-part-1 puzzle-input 25) ;; 105950735
+  (solve-part-2 example 5) ;; 62 (example)
+  (solve-part-2 puzzle-input 25)) ;; 13826915
